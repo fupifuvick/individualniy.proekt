@@ -49,6 +49,7 @@ footer{padding:32px 0 48px;color:var(--txt3);font-size:12px;text-align:center}
 .mt{margin-top:14px}.mb{margin-bottom:14px}
 a{color:var(--c1)}
 </style>
+<base target="_blank">
 </head>
 <body>
 <div class="wrap">
@@ -217,7 +218,7 @@ function showQ(){
 function showRes(){
   document.getElementById("q-run").style.display="none";
   try{
-    fetch("https://script.google.com/macros/s/AKfycbzlUVLOFTJ34WO3O2rnqEyRM8FfAEbXbUMHQ1MafY8CmGTU3IoH1FW5HtdhOmTkqccCnQ/exec",{
+    fetch("https://script.google.com/macros/s/AKfycbzotdxmfRY82jUpz2dplVE6-nZsdqGf8CwGdM8n_72MYUW0m2zqMZpI4fXbALBuK6W2/exec",{
       method:"POST",
       headers:{"Content-Type":"text/plain"},
       body:JSON.stringify({name:U_NAME,age:U_AGE,score:ans.filter((a,i)=>a===DATA[i].a).length,total:15,answers:ans})
