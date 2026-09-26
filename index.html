@@ -117,7 +117,7 @@ a{color:var(--c1)}
       <h2>Сможете ли вы обыграть нейросеть?</h2>
       <div class="muted" style="font-size:14px;max-width:520px;margin:10px auto 20px">15 ситуаций из жизни подростков со смешанными эмоциями. Выберите, что чувствует герой. В конце сравним ваши ответы с эталоном и с ответами всех четырёх нейросетей.</div>
       <button class="pbtn" onclick="startQuiz()">Начать тест</button>
-      <div class="tiny dim mt">~5 минут · ничего не сохраняется и никуда не отправляется</div>
+      <div class="tiny dim mt">~5 минут · результат анонимно сохраняется в таблицу исследования (без имени)</div>
     </div>
   </div>
   <div id="q-run" style="display:none">
@@ -211,6 +211,13 @@ function showQ(){
 
 function showRes(){
   document.getElementById("q-run").style.display="none";
+  try{
+    fetch("https://script.google.com/macros/s/AKfycbzlUVLOFTJ34WO3O2rnqEyRM8FfAEbXbUMHQ1MafY8CmGTU3IoH1FW5HtdhOmTkqccCnQ/exec",{
+      method:"POST",
+      headers:{"Content-Type":"text/plain"},
+      body:JSON.stringify({score:ans.filter((a,i)=>a===DATA[i].a).length,total:15,answers:ans})
+    });
+  }catch(e){}
   let score=0;ans.forEach((a,i)=>{if(a===DATA[i].a)score++;});
   const pct=Math.round(score/15*100);
   const agree={};
@@ -225,7 +232,7 @@ function showRes(){
   h+='<div class="lbl">Ваш результат</div>';
   h+='<div class="num">'+score+'<span class="dim" style="font-size:22px"> / 15</span></div>';
   h+='<div class="muted" style="font-size:14px;margin:10px 0 6px;max-width:480px;margin-left:auto;margin-right:auto">'+comment+'</div>';
-  h+='<div class="tiny dim">Для сравнения: ChatGPT — 13 · Grok — 14.5 · Gemini — 15 · Алиса — 15</div></div>';
+  h+='<div class="tiny dim">Для сравнения: ChatGPT — 13 · Grok — 14.5 · Gemini — 15 · Алиса — 15</div><div class="tiny dim mt">Ваш результат анонимно сохранён для второй волны исследования</div></div>';
 
   h+='<div class="card"><h2>Ваше сходство с нейросетями</h2>';
   h+='<div class="mb" style="font-size:14px">Ближе всего к вам отвечала: <span class="chip '+AIC[bestK]+'">'+AIN[bestK]+'</span> <span class="dim tiny">('+agree[bestK]+'% совпадений)</span></div>';
